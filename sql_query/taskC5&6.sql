@@ -108,7 +108,10 @@ CREATE TABLE cashierdetail (
     consignment INTEGER,
     ConsignmentRp INTEGER,
     SubTotal INTEGER,
-    payment INTEGER
+    payment INTEGER,
+    foreign key (noTrans) references cashier(noTrans),
+    foreign key (ArticleCode) references article(ArticleCode),
+    foreign key (barcode) references inventory(barcode)
 );
 
 insert into cashierdetail (
@@ -137,7 +140,8 @@ CREATE TABLE cashierpayment (
     CustomerCharge INTEGER,
     ReffNo VARCHAR2(128),
     ProgressiveDisc INTEGER not null,
-    primary key (id)
+    primary key (id),
+    foreign key (noTrans) references cashier(noTrans)
 );
 
 insert into CashierPayment (
@@ -163,7 +167,8 @@ CREATE TABLE inventory (
     ConsignmentRp INTEGER,
     qty INTEGER,
     status INTEGER not null,
-    primary key (barcode)
+    primary key (barcode),
+    foreign key (articleCode) references article(articleCode)
 );
 insert into inventory (
     articleCode, barcode, sizes, CurrentBasePrice, CurrentSalePrice, consignment, consignmentRp, qty, status

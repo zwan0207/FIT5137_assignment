@@ -73,7 +73,7 @@ INSERT INTO Article_temp (
     TypeInit, TypeName, startDate, expireDate, colourInit, colourName, sex, 
     picture, basePrice, salePrice, notes
     ) VALUES (
-        'AR.LWS-QB026','AST GAS OR GRASS BLACK','LWS','COOLTOUR',3,'HAT',3,'TRUCKER'
+        'AR.LWS-QB026','AST GAS OR GRASS BLACK','LWS','COOLTOUR',3,'HAT',3,'TRUCKER',
         to_timestamp('2017-02-18 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.FF'),
         to_timestamp('2017-05-19 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.FF'),
         1,'BLACK','M',NULL,111300,159000,NULL);
@@ -103,7 +103,7 @@ INSERT INTO Article_temp (
         to_timestamp('2017-06-04 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.FF'),
         to_timestamp('2017-09-02 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.FF'),
         1,'BLACK','M',NULL,140000,'175000',NULL);
------------
+
 --drop table Invenory_temp;
 /*
 CREATE TABLE Invenory ( articleCode VARCHAR2(128) NOT NULL,  barcode VARCHAR2(128) NOT NULL,  sizes VARCHAR2(128) NOT NULL,  CurrentBasePrice INTEGER,  CurrentSalePrice INTEGER,  consignment INTEGER,  consignmentRp INTEGER,  qty INTEGER,  status INTEGER NOT NULL)    
@@ -176,7 +176,7 @@ INSERT INTO inventory_temp (
     ) VALUES (
         'ESH.AR-SE0006','00ARSE0021','S',44000,135000,0,40500,3,0);
 
-------------
+
 --drop table CashierDetail_temp;
 /*
 CREATE TABLE CashierDetail_temp ( noTrans VARCHAR2(128) NOT NULL,  ArticleCode VARCHAR2(128) NOT NULL,  Barcode VARCHAR2(128) NOT NULL,  sizes VARCHAR2(128) NOT NULL,  qty INTEGER NOT NULL,  basePrice INTEGER,  salePrice INTEGER,  DiscountType INTEGER,  discountPersen INTEGER,  discountRupiah INTEGER,  DiscExpenses INTEGER,  consignment INTEGER,  consignmentRp INTEGER,  subTotal INTEGER,  payment INTEGER)    */
@@ -200,7 +200,7 @@ INSERT INTO CashierDetail_temp (
     ) VALUES (
         '01SCS19E010027','BSC.AR-SC0034','00ARSC0228','S',1,
         125000,315000,2,0,94500,1,0,44100,220500,176400);
-------------
+
 --drop table CashierPayment_temp;
 /*
 CREATE TABLE CashierPayment_temp ( id INTEGER NOT NULL,  noTrans VARCHAR2(128) NOT NULL,  paidType VARCHAR2(128) NOT NULL,  cardInit VARCHAR2(128),  cardName VARCHAR2(128),  cardNumber VARCHAR2(128),  totalpaid INTEGER,  MachineName VARCHAR2(128),  CompanyCharge INTEGER,  CustomerCharge INTEGER,  ReffNo VARCHAR2(128),  ProgressiveDisc INTEGER NOT NULL)    */
@@ -237,3 +237,32 @@ INSERT INTO CashierPayment_temp (
     MachineName, CompanyCharge, CustomerCharge, ReffNo, ProgressiveDisc
     ) VALUES (
         68275,'01SCS19E310181','CASH','-','-','-',135000,'-',0,0,'-',0);
+
+--Insert successfully but value is incorrect
+/*
+INSERT INTO CashierDetail_temp (noTrans, ArticleCode, Barcode, sizes, qty, 
+basePrice, salePrice, DiscountType, discountPersen, discountRupiah, 
+DiscExpenses, consignment, consignmentRp, subTotal, payment
+) VALUES (
+    '01SCS19E300663','AR.ESB-SE003','20ARSE0247','M 1',204750,
+    315000,2,0,63000,1,0,63000,252000,189000);
+*/
+--fixed:
+UPDATE CashierDetail_temp
+SET sizes = 'M'
+WHERE sizes = 'M 1';
+
+UPDATE CashierDetail_temp
+SET qty = 1204750
+WHERE qty = 204750;
+
+/*
+INSERT INTO CashierPayment_temp (id, noTrans, paidType, cardInit, cardName, 
+cardNumber, totalpaid, MachineName, CompanyCharge, CustomerCharge, ReffNo, 
+ProgressiveDisc) VALUES (
+    68439,'01SCS19E310345','CASH',-,-,-,-3300,-,0,0,-,0);
+*/
+--fixed:
+UPDATE CashierPayment_temp
+SET totalpaid = 3300
+WHERE totalpaid = -3300;
